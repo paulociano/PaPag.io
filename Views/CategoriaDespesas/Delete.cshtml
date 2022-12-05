@@ -1,0 +1,26 @@
+﻿@model papagio.Models.CategoriaDespesa
+
+@{
+    ViewData["Title"] = "Remover Categoria";
+    Layout = "~/Views/Shared/_LayoutLogged.cshtml";
+}
+
+<h1>Remover Categoria</h1>
+<hr />
+<div>
+    <h4>Categoria</h4>
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Descricao)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Descricao)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Voltar</a>
+    </form>
+</div>

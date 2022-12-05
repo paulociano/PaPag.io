@@ -1,0 +1,38 @@
+﻿@model IEnumerable<papagio.Models.CategoriaDespesa>
+
+@{
+    ViewData["Title"] = "Categorias";
+    Layout = "~/Views/Shared/_LayoutLogged.cshtml";
+}
+
+<h1>Categorias</h1>
+<hr />
+
+<p>
+    <a asp-action="Create" class="btn-novaConta">Nova Categoria</a>
+</p>
+<hr />
+<table class="tableDespesas">
+    <thead>
+        <tr>
+            <th scope="col">
+                <div>Descrição</div><div id="catCategoria" class="th-pesquisar"><i class="bi bi-search"><input type="search" placeholder="Filtrar Categoria..." /></i></div>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descricao)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" alt="Editar"><i class="bi bi-pencil-square"></i></a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id" alt="Remover"><i class="bi bi-x-circle-fill"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

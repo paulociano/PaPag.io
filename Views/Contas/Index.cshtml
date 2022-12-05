@@ -1,0 +1,115 @@
+﻿@model IEnumerable<papagio.Models.Conta>
+
+@{
+    ViewData["Title"] = "Contas";
+    Layout = "~/Views/Shared/_LayoutLogged.cshtml";
+}
+
+<div id="headConta">
+    <a asp-action="Create" class="btn-novaConta">Nova Conta</a>
+    <table>
+        <thead>
+            <tr>
+                <th scope="col">
+                    <label>Categoria</label><div class="th-pesquisar"><i class="bi bi-search"></i><input id="pesquisaCategoria" type="search" placeholder="Pesquisar..."/></div>
+                </th>
+                <th>
+                    <label>Despesa</label><div class="th-pesquisar"><i class="bi bi-search"><input id="pesquisaDespesa" type="search" placeholder="Pesquisar..." /></i></div>
+                </th>
+                <th>
+                    <label>Data</label><div class="th-pesquisar"><i class="bi bi-search"><input id="pesquisaData" type="search" placeholder="Pesquisar..." /></i></div>
+                </th>
+                <th>
+                    <label>Valor</label><div class="th-pesquisar"><i class="bi bi-search"><input id="pesquisaValor" type="search" placeholder="Pesquisar..." /></i></div>
+                </th>
+            </tr>
+        </thead>
+    </table>
+</div>
+   
+
+<div id="listaContas" class="listaContas flex-container">
+    @foreach (var item in Model)
+    {
+        <div class="cardConta">
+            <div class="conteudoConta">
+
+                <div class="contaHeader">
+                    <span id="categoriaDespesaConta" class=@Html.DisplayFor(model => item.Despesa.CategoriaDespesa.Descricao)>@Html.DisplayFor(model => item.Despesa.CategoriaDespesa.Descricao)</span>
+                    <hr />
+                    <div id="despesaConta"><h4>@Html.DisplayFor(model => item.Despesa.Descricao)</h4></div>
+                    <div id="valorConta">R$@Html.DisplayFor(model => item.Valor)</div>
+                    <hr />
+                </div>
+
+                <div class="contaBody">
+                    <div class="botoesConta">
+                        <ul>
+                            <li><a asp-action="Edit" asp-route-id="@item.Id" alt="Editar"><i class="bi bi-pencil-square"></i></a></li>
+                            <li><a asp-action="Details" asp-route-id="@item.Id" alt="Detalhes"><i class="bi bi-receipt"></i></a></li>
+                            <li><a asp-action="Delete" asp-route-id="@item.Id" alt="Remover"><i class="bi bi-x-circle-fill"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="contaFooter">
+                    <div id="dateConta" class="dateConta">@Html.DisplayFor(model => item.Data)</div>
+                    
+                </div>
+
+            </div>
+        </div>
+    }
+</div>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+    /*Tornar Link da Página Atual Ativo*/
+    document.getElementById('contas').className += ' menu-active';
+
+    /*Filtro por Categoria*/
+    $('#pesquisaCategoria').keyup(function (e) {
+        var termo = $('#pesquisaCategoria').val().toUpperCase();
+        $('#listaContas .cardConta #categoriaDespesaConta').each(function () {
+            if ($(this).html().toUpperCase().indexOf(termo) === -1) {
+                $(this).parent().parent().parent().hide();
+            } else {
+                $(this).parent().parent().parent().show();
+            }
+        });
+    });
+
+    /*Filtro por Despesa*/
+    $('#pesquisaDespesa').keyup(function (e) {
+        var termo = $('#pesquisaDespesa').val().toUpperCase();
+        $('#listaContas .cardConta #despesaConta').each(function () {
+            if ($(this).html().toUpperCase().indexOf(termo) === -1) {
+                $(this).parent().parent().parent().hide();
+            } else {
+                $(this).parent().parent().parent().show();
+            }
+        });
+    });
+
+    /*Filtro por Valor*/
+    $('#pesquisaValor').keyup(function (e) {
+        var termo = $('#pesquisaValor').val().toUpperCase();
+        $('#listaContas .cardConta #valorConta').each(function () {
+            if ($(this).html().toUpperCase().indexOf(termo) === -1) {
+                $(this).parent().parent().parent().hide();
+            } else {
+                $(this).parent().parent().parent().show();
+            }
+        });
+    });
+
+    /*Filtro por Data*/
+    $('#pesquisaData').keyup(function (e) {
+        var termo = $('#pesquisaData').val().toUpperCase();
+        $('#listaContas .cardConta #dateConta').each(function () {
+            if ($(this).html().toUpperCase().indexOf(termo) === -1) {
+                $(this).parent().parent().parent().hide();
+            } else {
+                $(this).parent().parent().parent().show();
+            }
+        });
+    });
+</script>

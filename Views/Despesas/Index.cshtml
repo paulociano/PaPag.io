@@ -1,0 +1,60 @@
+﻿@model IEnumerable<papagio.Models.Despesa>
+
+@{
+    ViewData["Title"] = "Despesas";
+    Layout = "~/Views/Shared/_LayoutLogged.cshtml";
+}
+
+<h1>Despesas</h1>
+<hr />
+
+<p>
+    <a asp-action="Create" class="btn-novaConta">Nova Despesa</a>
+</p>
+<hr />
+<table class="tableDespesas">
+    <thead>
+        <tr>
+            <th scope="col">
+                <div>Descrição</div><div id="descDespesa" class="th-pesquisar"><i class="bi bi-search"><input type="search" placeholder="Filtrar Despesa..." /></i></div>
+            </th>
+            <th scope="col">
+                <div>Categoria</div><div id="catDespesa" class="th-pesquisar"><i class="bi bi-search"><input type="search" placeholder="Filtrar Categoria..." /></i></div>
+            </th>
+            <th scope="col">
+            </th>
+        </tr>
+    </thead>
+    <tbody id="tabelaDespesas">
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descricao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoriaDespesa.Descricao)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id" alt="Editar"><i class="bi bi-pencil-square"></i></a> | 
+                <a asp-action="Delete" asp-route-id="@item.Id" alt="Remover"><i class="bi bi-x-circle-fill"></i></a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+    $(document).on("keyup", ".th-pesquisar input", function () {
+        var index = $(this).closest("th").index();
+
+        var nth = $(this).closest("table").find("td:nth-child(" + (index + 1).toString() + ")");
+        var valor = $(this).val().toUpperCase();
+        $(this).closest("table").find("tbody tr").show();
+        $(nth).each(function () {
+            if ($(this).text().toUpperCase().indexOf(valor) < 0) {
+                $(this).parent().hide();
+            }
+        });
+    });
+</script>
+
